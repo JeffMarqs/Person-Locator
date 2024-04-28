@@ -4,7 +4,7 @@ public class IdNotFoundException extends RuntimeException{
 
 	private static final long serialVersionUID = 1L;
 
-	public IdNotFoundException(Long id) {
-		super("Id could not be found: " + id);
+	public IdNotFoundException(Long id, String entityType) {
+		super("ID not found for " + entityType + ": " + id);
 	}
 }

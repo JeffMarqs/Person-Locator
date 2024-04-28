@@ -4,6 +4,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+import br.com.attus.personlocador.domain.entity.Person;
+import br.com.attus.personlocador.domain.entity.enums.AddressType;
+import br.com.attus.personlocador.infrastructure.exception.DuplicateMainAddressException;
+import br.com.attus.personlocador.infrastructure.exception.InvalidAddressTypeException;
 import br.com.attus.personlocador.infrastructure.exception.InvalidLocalDateFormatException;
 import br.com.attus.personlocador.infrastructure.exception.LocalDateNullException;
 
@@ -26,12 +30,10 @@ public class Utils {
 			throw new IllegalArgumentException("Full name cannot be null or empty");
 		
 		var name = fullName.split(" ");
-		
-		if(name.length >= 2)
-			return name;
-		else
+		if(name.length < 2)
 			throw new IllegalArgumentException("To complete your registration, please enter your surname.");
-			
+		
+		return name;
 	}
 	
 	public static String localDateToString(LocalDate localDate) {
@@ -48,6 +50,25 @@ public class Utils {
 		} catch (DateTimeParseException e) {
 			throw new InvalidLocalDateFormatException(dateString);
 		}
+	}
+	
+	public static AddressType validateAddressType(String type) {
+		if(!type.equalsIgnoreCase(Constants.MAIN) && !type.equalsIgnoreCase(Constants.SECODARY))
+			throw new InvalidAddressTypeException(type);
+			
+		return AddressType.valueOf(type.toUpperCase());
+		
+	}
+	
+	public static void hasMainAddressConflict(Person person, String type) {
+		if(type.equalsIgnoreCase(Constants.MAIN)) {
+			 boolean hasMainAddress = person.getAddresses().stream()
+		                .anyMatch(address -> address.getType() == AddressType.MAIN);
+			 
+			 if(hasMainAddress)
+				 throw new DuplicateMainAddressException();
+		}
+		
 	}
 
 }

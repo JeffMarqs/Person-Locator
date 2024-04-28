@@ -59,7 +59,7 @@ public class PersonServiceImpl implements PersonService {
 		person.setBirthDate(Utils.stringToLocalDate(personDTO.birthDate()));
 	}
 
-	private void buildListPersonDTO(ArrayList<PersonResponseDTO> personListDTO, List<Person> personList) {
+	private void buildListPersonDTO(List<PersonResponseDTO> personListDTO, List<Person> personList) {
 		personList.stream().forEach(person -> {
 			var personDTO = buildPersonDTO(person);
 			
@@ -68,7 +68,8 @@ public class PersonServiceImpl implements PersonService {
 	}
 	
 	private PersonResponseDTO buildPersonDTO(Person person) {
-		return new PersonResponseDTO(Utils.convertNameToFullName(person.getFirstName(), person.getLastName()),
+		return new PersonResponseDTO(person.getId(), Utils.convertNameToFullName(person.getFirstName(), person.getLastName()),
 				Utils.localDateToString(person.getBirthDate()), person.getAddresses());
 	}
+	
 }

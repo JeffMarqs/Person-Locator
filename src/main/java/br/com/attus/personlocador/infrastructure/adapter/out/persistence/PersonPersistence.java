@@ -9,6 +9,7 @@ import br.com.attus.personlocador.application.port.out.PersonRepositoryPortOut;
 import br.com.attus.personlocador.domain.entity.Person;
 import br.com.attus.personlocador.infrastructure.adapter.out.repository.PersonRepository;
 import br.com.attus.personlocador.infrastructure.exception.IdNotFoundException;
+import br.com.attus.personlocador.infrastructure.helper.Constants;
 
 @Service
 public class PersonPersistence implements PersonRepositoryPortOut {
@@ -18,7 +19,7 @@ public class PersonPersistence implements PersonRepositoryPortOut {
 
 	@Override
 	public Person findPersonId(Long id) {
-		return repository.findById(id).orElseThrow( () -> new IdNotFoundException(id));
+		return repository.findById(id).orElseThrow( () -> new IdNotFoundException(id, Constants.PERSON));
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package br.com.attus.personlocador.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.attus.personlocador.domain.entity.enums.AddressType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -7,6 +9,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,5 +39,10 @@ public class Address {
 	
 	@Enumerated(EnumType.STRING)
 	private AddressType type;
+	
+	@ManyToOne
+	@JoinColumn(name = "person_id")
+	@JsonIgnore
+	private Person person;
 	
 }
