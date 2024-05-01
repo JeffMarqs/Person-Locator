@@ -7,6 +7,7 @@ import java.time.format.DateTimeParseException;
 import br.com.attus.personlocador.domain.entity.Person;
 import br.com.attus.personlocador.domain.entity.enums.AddressType;
 import br.com.attus.personlocador.infrastructure.exception.DuplicateMainAddressException;
+import br.com.attus.personlocador.infrastructure.exception.IncompleteNameException;
 import br.com.attus.personlocador.infrastructure.exception.InvalidAddressTypeException;
 import br.com.attus.personlocador.infrastructure.exception.InvalidLocalDateFormatException;
 import br.com.attus.personlocador.infrastructure.exception.LocalDateNullException;
@@ -19,19 +20,19 @@ public class Utils {
 
 	
 	public static String convertNameToFullName(String firstName, String lastName) {
-		if (isStringEmptyOrNull(lastName) && isStringEmptyOrNull(firstName))
-			throw new IllegalArgumentException("First name and last name cannot be null or empty");
+		if (isStringEmptyOrNull(lastName) || isStringEmptyOrNull(firstName))
+			throw new IncompleteNameException("First name and last name cannot be null or empty");
 		
 		return firstName.trim() + " " + lastName.trim();
 	}
 	
 	public static String[] convertFullNameToName(String fullName) {
 		if(isStringEmptyOrNull(fullName))
-			throw new IllegalArgumentException("Full name cannot be null or empty");
+			throw new IncompleteNameException("Full name cannot be null or empty");
 		
 		var name = fullName.split(" ");
 		if(name.length < 2)
-			throw new IllegalArgumentException("To complete your registration, please enter your surname.");
+			throw new IncompleteNameException("To complete your registration, please enter your surname.");
 		
 		return name;
 	}
