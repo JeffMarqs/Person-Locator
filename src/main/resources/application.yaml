@@ -2,6 +2,10 @@ spring:
   application:
     name: personlocador
     
+server:
+  servlet:
+    context-path: /person-locator
+    
   #Configuração do banco H2
   datasource:
     url: jdbc:h2:mem:testdb

@@ -18,18 +18,18 @@ import br.com.attus.personlocador.domain.dto.PersonRequestDTO;
 import br.com.attus.personlocador.domain.dto.PersonResponseDTO;
 
 @RestController
-@RequestMapping("/person")
+@RequestMapping
 public class PersonController {
 	
 	@Autowired
 	private PersonService personService;
 	
-	@GetMapping("/locador/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<PersonResponseDTO> findPersonId(@PathVariable Long id) {
 		return ResponseEntity.ok().body(personService.findPersonId(id));
 	}
 	
-	@GetMapping("/locador")
+	@GetMapping
 	public ResponseEntity<List<PersonResponseDTO>> findAllPerson() {
 		return ResponseEntity.ok().body(personService.findAllPerson());
 	}
