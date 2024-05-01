@@ -1,4 +1,6 @@
-# Bem-vindo à documentação da API Person Locator. Esta API oferece recursos para cadastrar e consultar pessoas e seus endereços.
+## Person Locator
+
+## Bem-vindo à documentação da API Person Locator. Esta API oferece recursos para cadastrar e consultar pessoas e seus endereços.
 
 ## Base URL
 `localhost:8080/person-locator/`
@@ -178,6 +180,165 @@ Erros Exemplos:
 {
     "status": 404,
     "message": "ID not found for Person: 5",
+    "code": "404 NOT_FOUND",
+    "error": "Id Not Found"
+}
+```
+
+5. Busca Endereço
+ `GET /address/{id}`
+
+   Descrição: Retorna os detalhes de um endereço específico com o ID fornecido.
+
+    **Exemplo de Request:**
+   ```bash
+   curl --location 'http://localhost:8080/person-locator/address/1'
+
+Exemplo de Response:
+
+ ```bash
+{
+    "id": 1,
+    "personId": 1,
+    "street": "Rua das Flores",
+    "zipCode": "12345-678",
+    "number": "123",
+    "city": "São Paulo",
+    "state": "SP",
+    "type": "MAIN"
+}
+```
+Erros Exemplos:
+
+```bash
+{
+    "status": 404,
+    "message": "ID not found for Address: 6",
+    "code": "404 NOT_FOUND",
+    "error": "Id Not Found"
+}
+```
+
+6. Busca lista de endereços
+ `GET /address`
+
+   Descrição: Retorna os detalhes de uma lista de endereços.
+
+    **Exemplo de Request:**
+   ```bash
+   curl --location 'http://localhost:8080/person-locator/address'
+
+Exemplo de Response:
+
+ ```bash
+[
+    {
+        "id": 1,
+        "personId": 1,
+        "street": "Rua das Flores",
+        "zipCode": "12345-678",
+        "number": "123",
+        "city": "São Paulo",
+        "state": "SP",
+        "type": "MAIN"
+    },
+    {
+        "id": 2,
+        "personId": 1,
+        "street": "Avenida das Árvores",
+        "zipCode": "54321-876",
+        "number": "456",
+        "city": "Rio de Janeiro",
+        "state": "RJ",
+        "type": "SECONDARY"
+    },
+    {
+        "id": 3,
+        "personId": 2,
+        "street": "Praça da Paz",
+        "zipCode": "98765-432",
+        "number": "789",
+        "city": "Curitiba",
+        "state": "PR",
+        "type": "MAIN"
+    },
+    {
+        "id": 4,
+        "personId": 3,
+        "street": "Rua do Comércio",
+        "zipCode": "13579-246",
+        "number": "321",
+        "city": "Belo Horizonte",
+        "state": "MG",
+        "type": "MAIN"
+    }
+]
+```
+7. Cadastra Endereço
+ `POST /address/create`
+
+   Descrição: Este endpoint permite cadastrar uma novo endereço. Os detalhes do endereço devem ser enviados no corpo da requisição.
+
+    **Exemplo de Request:**
+   ```bash
+   curl --location 'http://localhost:8080/person-locator/address/create' \
+   --header 'Content-Type: application/json' \
+   --data '{
+    "street": "Tv Regia",
+    "zipCode": "13579-246",
+    "number": "19",
+    "city": "São Paulo",
+    "state": "SP",
+    "type": "Secondary",
+    "personId": "0"
+   }'
+
+Exemplo de Response:
+
+ ```bash
+201 Created
+```
+Erros Exemplos:
+
+```bash
+{
+    "status": 404,
+    "message": "ID not found for Person: 0",
+    "code": "404 NOT_FOUND",
+    "error": "Id Not Found"
+}
+```
+
+8. Atualiza Endereço
+ `PUT /address/{id}`
+
+   Descrição: Este endpoint permite atualizar um endereço já existente no banco de dados. Os detalhes do edenreço devem ser enviados no corpo da requisição junto com o ID do endereço a ser atualizada, que deve ser fornecido no path da URL.
+
+    **Exemplo de Request:**
+   ```bash
+   curl --location --request PUT 'http://localhost:8080/person-locator/address/4' \
+   --header 'Content-Type: application/json' \
+   --data '{
+    "street": "Av Parada Pinto",
+    "zipCode": "13579-246",
+    "number": "19",
+    "city": "São Paulo",
+    "state": "SP",
+    "type": "Secondary",
+    "personId": "2"
+   }'
+
+Exemplo de Response:
+
+ ```bash
+200 Ok
+```
+Erros Exemplos:
+
+```bash
+{
+    "status": 404,
+    "message": "ID not found for Person: 0",
     "code": "404 NOT_FOUND",
     "error": "Id Not Found"
 }
